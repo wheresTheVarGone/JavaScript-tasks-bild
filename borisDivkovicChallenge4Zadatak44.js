@@ -14,6 +14,7 @@ fillWithCards(14, 27, 1);
 fillWithCards(28, 41, 2);
 fillWithCards(42, 55, 3);
 
+console.log("Here's the deck:");
 console.log(newArr);
 console.log('Luck of the draw: ');
 
@@ -23,9 +24,9 @@ for(let i = 0; i < 6; i++){
 }
 console.log(draw);
 
-function fillWithCards(lB, hB, signNum){
+function fillWithCards(fromIndex, toIndex, signNum){
     let j = 0;
-    for(let i = lB; i <= hB; i++){
+    for(let i = fromIndex; i <= toIndex; i++){
         switch(signNum){
             case 0:
                 newArr[i] = cardNumArr[j] + ' ♣';

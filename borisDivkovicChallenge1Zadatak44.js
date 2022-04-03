@@ -6,5 +6,5 @@
 let arr = [];
 for(let i = 0; i < 20; i++){
     arr[i] = Math.ceil(Math.random() * (100 - 1));
-    console.log(arr[i]);
 }
+console.log(arr);
