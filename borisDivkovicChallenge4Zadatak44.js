@@ -24,9 +24,9 @@ for(let i = 0; i < 6; i++){
 }
 console.log(draw);
 
-function fillWithCards(fromIndex, toIndex, signNum){
+function fillWithCards(start, end, signNum){
     let j = 0;
-    for(let i = fromIndex; i <= toIndex; i++){
+    for(let i = start; i <= end; i++){
         switch(signNum){
             case 0:
                 newArr[i] = cardNumArr[j] + ' ♣';
