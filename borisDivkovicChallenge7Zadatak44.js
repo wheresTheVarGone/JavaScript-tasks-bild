@@ -14,9 +14,10 @@ for(let i = 1; i < 20; i++){
 }
 console.log(fibArr);
 
+console.log("\n");
+
 const newarr = removeEvenNumFromArr();  
 console.log(newarr);
-
 
 function removeEvenNumFromArr(arr = []) {
     for(let i=0; i<20; i++){
@@ -24,11 +25,3 @@ function removeEvenNumFromArr(arr = []) {
     }
     return arr;
 }
-
-
-// removeEvenNum(fibArr);
-// console.log(fibArr);
-
-// function removeEvenNum(arr){
-//     return arr.filter(fa => fa % 2 !== 0);
-// }

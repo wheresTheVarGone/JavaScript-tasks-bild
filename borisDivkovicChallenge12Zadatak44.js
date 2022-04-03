@@ -4,12 +4,12 @@
         1 do 20. Zatim sabira sve brojeve koje se nalaze na indexima cija suma
         je neparan broj. Primjer indexa: 0 i 1, 1 i 3 itd.
 */
-let matrix = [
-    [, , , ],
-    [, , , ],
-    [, , , ],
-    [, , , ]
-];
+let matrix = [];
+
+for(var i=0; i<4; i++) {
+    matrix[i] = new Array(4);
+}
+
 let rand = 0, sum=0;
 for(let i = 0; i < 4; i++){
     for(let j = 0; j < 4; j++){
