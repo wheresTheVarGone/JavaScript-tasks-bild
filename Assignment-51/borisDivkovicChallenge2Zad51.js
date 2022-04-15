@@ -27,5 +27,5 @@ function isTwinPrime(n) {
     for(i = 2; i <= n / 2; i++) { // idi do polovice prosljedjenog broja za koji se provjerava da li je prost
         if (n % i == 0) return 0; // ako je djeljivo sa i u bilo kojem slucaju, onda nije prost broj - vrati falsy vrijednost
     }
-    if(i > n / 2) return 1; // ako je i eventualno vece od aritmeticke sredine trazenog broja, onda je broj prost i vrati truthy vrijednost
+    if(i > n / 2) return 1; // ako je i eventualno vece od sredine trazenog broja, onda je broj prost i vrati truthy vrijednost
 }  
