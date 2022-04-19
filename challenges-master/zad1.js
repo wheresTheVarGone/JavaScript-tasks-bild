@@ -2,7 +2,8 @@
     1
         Napisati funkciju koja prima broj minuta, a zatim vraca koliko je to u sekundama. Funkcija prima cijele kao i decimalne brojeve.
 */
-function kolikoSekundi(min){
+
+function kolikoSekundi(min) {
     return min * 60;
 }
 

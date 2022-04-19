@@ -3,10 +3,10 @@
         Napisati funkciju koja prima 2D niz, zatim ga konertuje u 1D niz. Ovaj proces se zove: "flattening an array", gdje se smanjuje broj dimenzija niza.
 */
 
-function flattenMultidimArray(matrix){
+function flattenMultidimArray(matrix) {
     let newArr = [], arrIndex = 0;
-    for(let i = 0; i < matrix.length; i++){
-        for(let j = 0; j < matrix[i].length; j++){
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
             newArr[arrIndex] = matrix[i][j];
             arrIndex++;
         }

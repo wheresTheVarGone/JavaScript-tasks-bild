@@ -4,10 +4,9 @@
         radi za sve tipove podataka.
 */
 
-function find(searchArray, lookForThis){
-    for(let i = 0; i < searchArray.length; i++){
-        if(searchArray[i] === lookForThis)
-        {
+function find(searchArray, lookForThis) {
+    for (let i = 0; i < searchArray.length; i++) {
+        if (searchArray[i] === lookForThis) {
             return true;
         }
     }
