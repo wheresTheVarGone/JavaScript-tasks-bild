@@ -17,15 +17,15 @@ function changeMachineOptions(cash) {
         option = cash / 10;
         process.stdout.write(`${option} * 10KM\t`);
     }
-    if (cash % 20 == 0){
+    if (cash % 20 == 0) {
         option = cash / 20;
         process.stdout.write(`${option} * 20KM\t`);
     }
-    if (cash % 50 == 0){
+    if (cash % 50 == 0) {
         option = cash / 50;
         process.stdout.write(`${option} * 50KM\t`);
     }
-    if (cash % 100 == 0){
+    if (cash % 100 == 0) {
         option = cash / 100;
         process.stdout.write(`${option} * 100KM\t`);
     }

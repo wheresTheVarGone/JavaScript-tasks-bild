@@ -13,15 +13,15 @@ function vowelPercentage(str) {
     let vowelCounter = 0;
     for (let i = 0; i < str.length; i++) {
         if (vowelArr.includes(str[i])) vowelCounter++;
-    } 
-    return (vowelCounter / str.length)*100;
+    }
+    return (vowelCounter / str.length) * 100;
 }
 function consonantPercentage(str) {
     let consonantCounter = 0;
     for (let i = 0; i < str.length; i++) {
         if (consonantArr.includes(str[i])) consonantCounter++;
-    } 
-    return (consonantCounter / str.length)*100;
+    }
+    return (consonantCounter / str.length) * 100;
 }
 function specialCharPercentage(str) {
     return 100 - (vowelPercentage(str) + consonantPercentage(str));

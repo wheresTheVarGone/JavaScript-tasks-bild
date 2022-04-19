@@ -5,7 +5,7 @@
     sada na (0, 20) 30 koraka istočno, sada na (30, 20) 10 koraka južno. sada u (30, 10) 40 koraka zapadno, sada na (-10, 10) ...i završit će na koordinatama (-10, 10).
 */
 
-function funnyRobot(up, right, down, left){
+function funnyRobot(up, right, down, left) {
     let x = 0, y = 0;
     console.log(x, y);
     y += up;

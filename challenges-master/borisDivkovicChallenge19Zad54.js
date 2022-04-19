@@ -19,7 +19,7 @@ function checkStr(strToCheck) {
         // console.log(counter); // za debugging
         // u idealnom slucaju, kada ide slovo pa broj, trebalo bi da se vrijednost brojaca nikad ne smanji ispod 0 ili poveca iznad 1
         if (counter > 1 || counter < 0) { // te ako se desi, vrati false i nema potrebe da se dalje provjerava
-            return false; 
+            return false;
         }
     }
     return true; // ako se do sada vec nije vratilo false, vrati true.

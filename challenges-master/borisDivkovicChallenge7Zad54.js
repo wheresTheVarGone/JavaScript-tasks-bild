@@ -24,6 +24,7 @@ function calcPls(num1, op, num2) {
             break;
         default:
             console.log("Pogresan unos.");
+            break;
     }
     return res;
 }

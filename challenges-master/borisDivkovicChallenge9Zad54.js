@@ -10,6 +10,7 @@ function find(searchArray, lookForThis) {
             return true;
         }
     }
+    return false;
 }
 
-console.log(`${find(["hehexd", "bruh", "wot"], "hehexd")}`);
+console.log(`${find(["1", "2", "3"], "#")}`);
