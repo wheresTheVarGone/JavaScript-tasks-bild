@@ -9,6 +9,7 @@ const tv = {
     numberOfChannels: 120,
     powerState: false,
     channelNum: 1,
+    volume: 10,
     switchPowerState() {
         this.powerState = !(this.powerState);
         this.makeSound();
@@ -31,12 +32,12 @@ const tv = {
             direction = 1;
         this.channelNum += direction;
         let channelRange = this.checkIfchannelRange(this.channelNum);
-        switch(channelRange){
+        switch (channelRange) {
             case -1:
                 this.channelNum++;
                 console.log(`Channel doesn't exist (1-${this.numberOfChannels} available)`);
                 break;
-            case 1: 
+            case 1:
                 this.channelNum--;
                 console.log(`Channel doesn't exist (1-${this.numberOfChannels} available)`);
                 break;
@@ -45,7 +46,14 @@ const tv = {
         }
     },
     desiredChannel(channel) {
-
+        this.makeSound();
+        console.log(`Changing channel`);
+        if (!this.checkIfchannelRange(channel)) {
+            this.channelNum = channel;
+            return channel;
+        }
+        console.log(`Channel ${channel} doesn't exist (1-${this.numberOfChannels} available)`);
+        return this.channelNum;
     },
     checkIfchannelRange(channel) {
         if (channel <= 0)
@@ -54,6 +62,14 @@ const tv = {
             return 1;
         else
             return 0;
+    },
+    setVolume(volume){
+        this.makeSound();
+        if(volume <= 0 || volume > 100){
+            console.log(`Can't set volume level ${volume}, current volume ${this.volume}`);
+        }
+        this.volume = volume;
+        console.log(`Volume set to ${this.volume}.`);
     }
 };
 tv.readPowerState();
@@ -61,3 +77,7 @@ tv.switchPowerState();
 console.log(tv.channelNum);
 tv.channelUpOrDown(-1);
 console.log(tv.channelNum);
+console.log(tv.desiredChannel(121));
+console.log(tv.desiredChannel(82));
+tv.setVolume(90);
+tv.switchPowerState();
