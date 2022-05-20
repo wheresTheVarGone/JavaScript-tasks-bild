@@ -1,6 +1,6 @@
 /*
     1. 
-        Create a TV using an object in javascript.
+        Kreirati TV objekat. Nema daljeg opisa zadatka. Imate potpuno slobodu da uradite ovaj zadatak kako god zelite.
 */
 const tv = {
     manufacturer: 'LG',
@@ -63,9 +63,9 @@ const tv = {
         else
             return 0;
     },
-    setVolume(volume){
+    setVolume(volume) {
         this.makeSound();
-        if(volume <= 0 || volume > 100){
+        if (volume <= 0 || volume > 100) {
             console.log(`Can't set volume level ${volume}, current volume ${this.volume}`);
         }
         this.volume = volume;
