@@ -1,6 +1,5 @@
 /*
-    1.	
-        Kreirati funkciju koja kreira Company objekat. Company objekat ima sljedece properties:
+    1.	Kreirati funkciju koja kreira Company objekat. Company objekat ima sljedece properties:
             ○	ID → number
             ○	name → string
             ○	location → string
@@ -9,7 +8,6 @@
             ○	hirePerson → function
             ○	fireEmployee → function
         Svi objekti imaju ove properties, values prosljedjujete u funkciju.
-
     2.	Napisati funkciju koja nam kreira Person objekat. Person ima sljedece properties: 
             ○	ID → number
             ○	firstName → string
@@ -18,7 +16,6 @@
             ○	salary → number
             ○	companyID → number
     Svi objekti imaju ove properties, values prosljedjujete u funkciju.
-
     3.	Kreirati prazne nizove: COMPANIES i PEOPLE globalno.
     4.	Kreirati 3 kompanije sa vrijednostima koje vi zelite.
     5.	PEOPLE niz popuniti sa 1000 objekata s tim da imena mozete naci u ovom fajlu: employees.txt, a ostale properties postaviti na defaultne vrijednosti.
@@ -28,9 +25,54 @@
     8.	Izracunati koliko % je nezaposlenih.
     9.	Otpustiti ljude iz sve 3 kompanije koji imaju platu manju od 1500.
     10.	Ponovo prikazati postotak nezaposlenih ljudi.
-    11.	 Zatim, identifikovati kompaniju koja ima najmanju prosjecnu platu i dodatno zaposliti 50 ljudi u tu kompaniju.
+    11.	Zatim, identifikovati kompaniju koja ima najmanju prosjecnu platu i dodatno zaposliti 50 ljudi u tu kompaniju.
     12.	Ispisati sve 3 kompanije, i prikazati broj zaposlenih i prosjecnu platu.
 */
+function defineSalary() {
+    const rand = Math.floor(1000 + Math.random() * 2000);
+    const salary = 100 * (Math.round(rand / 100));
+    return salary;
+}
+function getUnemployedPercentage(){
+    let numOfUnemployed = 0;
+    for(let i = 0; i < PEOPLE.length; i++){
+        if(!PEOPLE[i].isEmployed)
+            numOfUnemployed++;
+    }
+    return ((numOfUnemployed / (PEOPLE.length - 1))*100).toFixed(2) + '%';
+}
+function getLowestAvgSalaryCompanyIndex(companyNum){
+    const sumArr = [];
+    for(let i = 0; i < companyNum; i++){
+        sumArr.push(0);
+        for(let j = 0; j < COMPANIES[i].employeesID.length; j++){
+            let ID = COMPANIES[i].employeesID[j];
+            sumArr[i] += PEOPLE[ID].salary;
+        }
+        sumArr[i] = sumArr[i] / COMPANIES[i].employeesID.length - 1;
+    }
+    const min = Math.min(...sumArr);
+    for(let i = 0; i < companyNum; i++){
+        if(sumArr[i] == min){
+            return i;
+        }
+    }
+}
+function avgSalary(companyNum){
+    const sumArr = [];
+    for(let i = 0; i < companyNum; i++){
+        sumArr.push(0);
+        for(let j = 0; j < COMPANIES[i].employeesID.length; j++){
+            let ID = COMPANIES[i].employeesID[j];
+            sumArr[i] += PEOPLE[ID].salary;
+        }
+        sumArr[i] = sumArr[i] / COMPANIES[i].employeesID.length - 1;
+        COMPANIES[i].avgWages = sumArr[i].toFixed(2);
+    }
+}
+function updateNumberOfEmployees(companyID){
+    COMPANIES[companyID].numberOfEmployees = COMPANIES[companyID].employees.length - 1;
+}
 function createNewCompanyObject(companyName, ID, location, numberOfEmployees) {
     const newObject = new Object();
     newObject.ID = ID;
@@ -38,16 +80,59 @@ function createNewCompanyObject(companyName, ID, location, numberOfEmployees) {
     newObject.location = String(location);
     newObject.numberOfEmployees = numberOfEmployees;
     newObject.employees = [];
-    newObject.hirePerson = function hirePerson() {
-
-    }
-    newObject.fireEmployee = function fireEmployee() {
-
-    }
+    newObject.employeesID = [];
+    newObject.avgWages;
+    newObject.hirePerson = function hirePerson(percentage, companyIndex, opSwitch) {
+        const randArr = [];
+        if(!opSwitch){
+            for (let i = 0; i < PEOPLE.length * percentage; i++) {
+                const rand = Math.floor(1 + Math.random() * 999);
+                if (randArr.includes(rand)) {
+                    i--;
+                    continue;
+                } else if (PEOPLE[rand].isEmployed == false) {
+                    PEOPLE[rand].isEmployed = true;
+                    PEOPLE[rand].companyID = COMPANIES[companyIndex].ID;
+                    PEOPLE[rand].salary = defineSalary();
+                    COMPANIES[companyIndex].employeesID.push(PEOPLE[rand].ID);
+                    COMPANIES[companyIndex].employees.push(PEOPLE[rand].firstName + ' ' + PEOPLE[rand].lastName);
+                }
+                randArr.push(rand);
+            }
+        } else {
+            for (let i = 0; i < 50; i++) {
+                const rand = Math.floor(1 + Math.random() * 999);
+                if (randArr.includes(rand)) {
+                    i--;
+                    continue;
+                } else if (PEOPLE[rand].isEmployed == false) {
+                    PEOPLE[rand].isEmployed = true;
+                    PEOPLE[rand].companyID = COMPANIES[companyIndex].ID;
+                    PEOPLE[rand].salary = defineSalary();
+                    COMPANIES[companyIndex].employeesID.push(PEOPLE[rand].ID);
+                    COMPANIES[companyIndex].employees.push(PEOPLE[rand].firstName + ' ' + PEOPLE[rand].lastName);
+                }
+                randArr.push(rand);
+            }
+        }
+        updateNumberOfEmployees(companyIndex);
+    },
+        newObject.fireEmployee = function fireEmployee(companyIndex, salaryLimit) {
+            for(let i = 0; i < COMPANIES[companyIndex].employees.length; i++){
+                let ID = COMPANIES[companyIndex].employeesID[i];
+                if(PEOPLE[ID].salary < salaryLimit){
+                    COMPANIES[companyIndex].employees.splice(i, 1);
+                    COMPANIES[companyIndex].employeesID.splice(i, 1);
+                    PEOPLE[ID].salary = null;
+                    PEOPLE[ID].isEmployed = false;
+                    PEOPLE[ID].companyID = null;
+                }
+            }
+        }
     return newObject;
 }
 function createNewPersonObject(ID, name, isEmployed, salary, companyID) {
-    const nameArr = splitIntoFirstAndLastName(name);
+    const nameArr = name.split(' ');
     const newObject = new Object();
     newObject.ID = ID;
     newObject.firstName = nameArr[0];
@@ -57,65 +142,63 @@ function createNewPersonObject(ID, name, isEmployed, salary, companyID) {
     newObject.companyID = companyID;
     return newObject;
 }
-function splitIntoFirstAndLastName(name) {
-    const arr = []; // First name will be at position 0, last name at position 1
-    let firstName = '', lastName = '';
-    let opSwitch = false;
-    for (let i = 0; i < name.length; i++) {
-        if (name[i] == ' ') {
-            opSwitch = true;
-            continue;
-        }
-        if (opSwitch == false) {
-            firstName += name[i];
-        } else {
-            lastName += name[i];
-        }
-    }
-    arr.push(firstName);
-    arr.push(lastName);
-    return arr;
+function readThisFile(path, name) {
+    const { readFileSync } = require('fs');
+    // Pozdravljam te mentore, ubacio sam path jer mi VSC nije prepoznavao da se .txt file nalazi u istom folderu. Sve sam isprobao.
+    //                                      Delete!
+    const newArrayWithNames = readFileSync(`${path}${name}`).toString().replace(/\r\n/g, '\n').split('\n');
+    newArrayWithNames.pop();
+    return newArrayWithNames;
+}
+function readThisFilePathless(name) {
+    // Alternativno pozovi ovu funkciju dok budes pregledao, komentarisao sam poziv ispod.
+    const { readFileSync } = require('fs');
+    const newArrayWithNames = readFileSync(`${name}`).toString().replace(/\r\n/g, '\n').split('\n');
+    newArrayWithNames.pop();
+    return newArrayWithNames;
 }
 const COMPANIES = [], PEOPLE = [];
 
-COMPANIES.push(createNewCompanyObject('Beko', 1234, 'UK', 1200));
-COMPANIES.push(createNewCompanyObject('Opal', 1555, 'GB', 1500));
-COMPANIES.push(createNewCompanyObject('Peypel', 1293, 'KP', 1700));
-console.table(COMPANIES);
+COMPANIES.push(createNewCompanyObject('Beko', 1111, 'UK', 0));
+COMPANIES.push(createNewCompanyObject('Opal', 2222, 'GB', 0));
+COMPANIES.push(createNewCompanyObject('Peypel', 3333, 'KP', 0));
 
-const { readFileSync } = require('fs');
+let filePath = 'C:/Users/Boris/Desktop/JavaScript-tasks-bild/objectsCompanies/';
+let fileName = 'employees.txt';
+const namesArray = readThisFile(filePath, fileName);
+// const namesArray = readThisFilePathless(fileName);
 
-const namesArray = readFileSync('employees.txt').toString().replace(/\r\n/g, '\n').split('\n'); // Strpaj ovo u funkciju.
-namesArray.pop();
+console.log(namesArray);
 
 for (let i = 0; i < 1000; i++) {
-    PEOPLE.push(createNewPersonObject(i + 1, namesArray[i], false, null, null));
+    PEOPLE.push(createNewPersonObject(i, namesArray[i], false, null, null));
 }
-console.table(PEOPLE);
 
-const randArr = [];
+COMPANIES[0].hirePerson(0.4, 0, false);
+COMPANIES[1].hirePerson(0.33, 1, false);
+COMPANIES[2].hirePerson(0.5, 2, false);
 
-for (let i = 0; i < PEOPLE.length * 0.4; i++) {
-    const rand = Math.floor(1 + Math.random() * 999);
-    if (randArr.includes(rand)) {
-        i--;
-        continue;
-    } else {
-        PEOPLE[rand].isEmployed = true;
-        PEOPLE[rand].companyID = 1234;
-    }
-    randArr.push(rand);
-}
-console.table(PEOPLE);
+let unemployedPercentage = getUnemployedPercentage();
+console.log(`Postotak nezaposlenih je ${unemployedPercentage}`);
 
+COMPANIES[0].fireEmployee(0, 1500);
+COMPANIES[1].fireEmployee(1, 1500);
+COMPANIES[2].fireEmployee(2, 1500);
 
-let brojZaposlenih = 0;
-for (let i = 0; i < PEOPLE.length; i++) {
-    if (PEOPLE[i].isEmployed) {
-        brojZaposlenih++;
-        COMPANIES[0].employees.push(PEOPLE[i].firstName + ' ' + PEOPLE[i].lastName);
-    }
-}
-COMPANIES[0].numberOfEmployees = brojZaposlenih;
+unemployedPercentage = getUnemployedPercentage();
+console.log(`Postotak nezaposlenih je ${unemployedPercentage}`);
+
+const lowestAvgSalaryCompanyIndex = getLowestAvgSalaryCompanyIndex(3);
+COMPANIES[lowestAvgSalaryCompanyIndex].hirePerson(0.5, lowestAvgSalaryCompanyIndex, true);
+
+avgSalary(3); // racuna prosjecne plate za proizvoljan broj kompanija
+
 console.log(COMPANIES[0]);
-console.table(PEOPLE);
+console.log(`Broj zaposlenih je ${COMPANIES[0].numberOfEmployees}`);
+console.log(`Prosjecna plata je ${COMPANIES[0].avgWages}`);
+console.log(COMPANIES[1]);
+console.log(`Broj zaposlenih je ${COMPANIES[1].numberOfEmployees}`);
+console.log(`Prosjecna plata je ${COMPANIES[1].avgWages}`);
+console.log(COMPANIES[2]);
+console.log(`Broj zaposlenih je ${COMPANIES[2].numberOfEmployees}`);
+console.log(`Prosjecna plata je ${COMPANIES[2].avgWages}`);
