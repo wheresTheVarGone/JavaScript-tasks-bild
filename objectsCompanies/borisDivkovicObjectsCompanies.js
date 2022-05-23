@@ -163,12 +163,10 @@ COMPANIES.push(createNewCompanyObject('Beko', 1111, 'UK', 0));
 COMPANIES.push(createNewCompanyObject('Opal', 2222, 'GB', 0));
 COMPANIES.push(createNewCompanyObject('Peypel', 3333, 'KP', 0));
 
-let filePath = 'C:/Users/Boris/Desktop/JavaScript-tasks-bild/objectsCompanies/';
+let filePath = 'C:/Users/John/Desktop/JavaScript-tasks-bild/objectsCompanies/';
 let fileName = 'employees.txt';
 const namesArray = readThisFile(filePath, fileName);
 // const namesArray = readThisFilePathless(fileName);
-
-console.log(namesArray);
 
 for (let i = 0; i < 1000; i++) {
     PEOPLE.push(createNewPersonObject(i, namesArray[i], false, null, null));
@@ -181,24 +179,21 @@ COMPANIES[2].hirePerson(0.5, 2, false);
 let unemployedPercentage = getUnemployedPercentage();
 console.log(`Postotak nezaposlenih je ${unemployedPercentage}`);
 
-COMPANIES[0].fireEmployee(0, 1500);
-COMPANIES[1].fireEmployee(1, 1500);
-COMPANIES[2].fireEmployee(2, 1500);
+
+for(let i = 0; i < COMPANIES.length; i++){
+    COMPANIES[i].fireEmployee(i, 1500);
+}
 
 unemployedPercentage = getUnemployedPercentage();
 console.log(`Postotak nezaposlenih je ${unemployedPercentage}`);
 
 const lowestAvgSalaryCompanyIndex = getLowestAvgSalaryCompanyIndex(3);
-COMPANIES[lowestAvgSalaryCompanyIndex].hirePerson(0.5, lowestAvgSalaryCompanyIndex, true);
+COMPANIES[lowestAvgSalaryCompanyIndex].hirePerson(null, lowestAvgSalaryCompanyIndex, true);
 
-avgSalary(3); // racuna prosjecne plate za proizvoljan broj kompanija
+avgSalary(COMPANIES.length); // racuna prosjecne plate za proizvoljan broj kompanija
 
-console.log(COMPANIES[0]);
-console.log(`Broj zaposlenih je ${COMPANIES[0].numberOfEmployees}`);
-console.log(`Prosjecna plata je ${COMPANIES[0].avgWages}`);
-console.log(COMPANIES[1]);
-console.log(`Broj zaposlenih je ${COMPANIES[1].numberOfEmployees}`);
-console.log(`Prosjecna plata je ${COMPANIES[1].avgWages}`);
-console.log(COMPANIES[2]);
-console.log(`Broj zaposlenih je ${COMPANIES[2].numberOfEmployees}`);
-console.log(`Prosjecna plata je ${COMPANIES[2].avgWages}`);
+for(let i = 0; i < COMPANIES.length; i++){
+    console.log(COMPANIES[i]);
+    console.log(`Broj zaposlenih je ${COMPANIES[i].numberOfEmployees}`);
+    console.log(`Prosjecna plata je ${COMPANIES[i].avgWages}`);
+}
